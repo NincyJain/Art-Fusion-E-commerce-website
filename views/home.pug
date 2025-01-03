@@ -1,0 +1,187 @@
+extends base.pug
+
+block style
+  style 
+    include ../public/css/home.css
+    // Slick Carousel CSS
+  link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css")
+  link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css")
+  link(href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet")
+
+block content
+  section.hero-section
+    .background_image
+      img(src="../../img/paris.png" alt="Paris")
+    .text-overlay
+      h2 Unveil Your Creativity: 
+      h3 Buy, Sell, and Showcase Art from Talented Creators
+      button#btn1 Shop Now
+
+  section
+    .products_slick-carousel
+      div.slick_images 
+        img(src="../img/glassart.png" alt="Glass Art")
+        //- button(onclick = "addtowishlist('Glass Art')") Add to Wishlist
+        .text-overlay
+          h3 Glass Art
+      div.slick_images
+        img(src="../img/illustration.png" alt="Drawing and Illustration")
+        //- button(onclick = "addtowishlist('Drawing and Illustration')") Add to Wishlist
+        .text-overlay
+          h3 Drawing and Illustration
+      div.slick_images
+        img(src="../img/fibreart.png" alt="Fibre Arts")
+        //- button(onclick = "addtowishlist('Fibre Arts')") Add to Wishlist
+        .text-overlay
+          h3 Fibre Arts
+      div.slick_images
+        img(src="../img/sculpture.png" alt="Sculpture")
+        //- button(onclick = "addtowishlist('Sculpture')") Add to Wishlist
+        .text-overlay
+          h3 Sculpture
+      div.slick_images
+        img(src="../img/ceramics.png" alt="Ceramics")
+        //- button(onclick = "addtowishlist('Ceramics')") Add to Wishlist
+        .text-overlay
+          h3 Ceramics
+      div.slick_images
+        img(src="../img/resinart.png" alt="Resin Art")
+        //- button(onclick = addtowishlist('Resin Art')) Add to Wishlist
+        .text-overlay
+          h3 Resin Art
+
+  section.featured-products
+    h2 Featured Products
+    div.card_collection
+      //- Peacock Painting
+      div.featured_prod_card
+        div
+          img(src="../img/peacock.png" alt="peacock")
+        .texts 
+          h4 Peacock Original 
+          p ₹6,799
+          span ColorMate
+
+      //- Resin Necklace
+      div.featured_prod_card
+        div
+          img(src="../img/resinnecklace.png" alt="resin necklace")
+        .texts 
+          h4 Handmade Resin Necklace
+          p ₹2,999
+          span JewelryHub
+
+      //- Wine Glass
+      div.featured_prod_card
+        div
+          img(src="../img/wineglass.png" alt="wine glass")
+        .texts 
+          h4 Decorative Wine Glass
+          p ₹1,499
+          span GlassCraft
+
+      //- Sweaters
+      div.featured_prod_card
+        div
+          img(src="../img/sweaters.png" alt="sweaters")
+        .texts 
+          h4 Handknit Cozy Sweaters
+          p ₹4,299
+          span KnitWear
+
+      //- Miniatures
+      div.featured_prod_card
+        img(src="../img/miniatures.png" alt="miniatures")
+        .texts 
+          h4 Artisan Miniature Sculptures
+          p ₹3,999
+          span MiniArt
+
+      //- Photography
+      div.featured_prod_card
+        div
+          img(src="../img/photography.png" alt="photography")
+        .texts 
+          h4 Black & White Photography
+          p ₹7,199
+          span PhotoWorld
+
+      //- Wall Hangings
+      div.featured_prod_card
+        div
+          img(src="../img/wallhangings.png" alt="wall hangings")
+        .texts 
+          h4 Handmade Wall Hangings
+          p ₹5,499
+          span DecoStyle
+
+      //- Vase
+      div.featured_prod_card
+        div
+          img(src="../img/vase.png" alt="vase")
+        .texts 
+          h4 Artistic Ceramic Vase
+          p ₹2,599
+          span HomeDeco
+
+    section.new-arrivals
+    h2 New Arrivals
+    div.card_collection
+      //- Custom Name Necklace 
+      div.featured_prod_card
+        div
+          img(src="../img/necklace.png" alt="necklace")
+        .texts 
+          h4 Custom Name Necklace 
+          p ₹1,116
+          span Anya shop studio
+
+      //- crochet flowers
+      div.featured_prod_card
+        div
+          img(src="../img/crochetflowers.png" alt="crochetflowers")
+        .texts 
+          h4 Crochet tulip pattern
+          p ₹437
+          span my creative butterfly
+
+      //- Purse strap
+      div.featured_prod_card
+        div
+          img(src="../img/Purse-strap.png" alt="Purse strap")
+        .texts 
+          h4 Adjustable Cotton Embroidery Webbing Shoulder Purse Strap
+          p ₹1,488
+          span Warman Boutique
+
+      //- Handbag
+      div.featured_prod_card
+        div
+          img(src="../img/handbag.png" alt="Hand bag")
+        .texts 
+          h4 Faux Embroidery Wildflower Cross Body Hand Bag
+          p ₹3,725
+          span CharmedandWyld
+
+
+  section.newsletter-section
+    div.sign_Up_for_Newsletters
+      h2 Sign Up for Newsletters
+      span Get email updates about our latest shop and special offers
+      form.newsletter-form(action="/subscribe" method="POST")
+        input(type="email" name="email" placeholder="Enter your email address" required)
+        button(type="submit") Subscribe
+
+
+
+      
+
+block script
+  <!-- jQuery -->
+  script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+  <!-- Slick Carousel JS -->
+  script(src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js")
+  script 
+    include ../public/js/home.js
+
+

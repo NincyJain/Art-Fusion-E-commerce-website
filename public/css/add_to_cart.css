@@ -1,0 +1,151 @@
+/* Main cart section */
+.add_to_cart {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;  /* Creates two columns */
+    gap: 30px;
+}
+
+/* Left column container */
+.cart_items {
+    grid-column: 1;  /* Places in first column */
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cart_items ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cart_items li {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 20px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.cart_items img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.cart_items h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 0 0 10px 0;
+}
+
+.cart_items span {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+    margin: 5px 0;
+}
+
+/* Add more from wishlist section */
+.add_more_from_wishlist {
+    grid-column: 1;  /* Places in first column, below cart items */
+    margin-top: 20px;
+}
+
+.add_more_from_wishlist button {
+    width: 100%;
+    padding: 12px 0;
+    background-color: white;
+    border: 2px solid #ff4d6d;
+    color: #ff4d6d;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add_more_from_wishlist button:hover {
+    background-color: #ff4d6d;
+    color: white;
+}
+
+/* Price details section */
+.Price_details {
+    grid-column: 2;  /* Places in second column */
+    grid-row: 1 / span 2;  /* Spans both rows to stay at the top */
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.Price_details h5 {
+    font-size: 1rem;
+    color: #666;
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Price_details h5::after {
+    content: '₹0';
+    color: #333;
+}
+
+.Price_details h4 {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 20px 0;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+}
+
+.Price_details button {
+    width: 100%;
+    padding: 15px 0;
+    background-color: #ff4d6d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.Price_details button:hover {
+    background-color: #ff3557;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .add_to_cart {
+        grid-template-columns: 1fr;  /* Stack everything in one column */
+    }
+    
+    .Price_details {
+        grid-column: 1;
+        grid-row: auto;
+        position: static;
+        margin-top: 20px;
+    }
+    
+    .cart_items,
+    .add_more_from_wishlist {
+        grid-column: 1;
+    }
+}

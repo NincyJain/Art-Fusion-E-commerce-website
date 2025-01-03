@@ -1,0 +1,57 @@
+extends base.pug
+
+block style 
+    style 
+        include ../public/css/add_to_cart.css
+
+block content 
+    //Add to cart section
+    section.add_to_cart 
+
+        if products.length > 0 
+            -let i = 0
+            -let total_mrp = 0
+            div.cart_items
+
+                ul
+                    while i < products.length
+                        -let product = products[i]//it is not a object 
+
+                        -total_mrp += parseInt(product.Price)
+                        p #{total_mrp}
+                        li 
+                            img(src=product.Image alt=product.Name)
+                            h4= product.Name
+                            p ₹#{product.Price}
+                            span 14 days return available
+                            span Delivery in 3 days
+                            button.remove-from-wishlist(data-id=`${product.Id}`) Remove
+                        - i++
+        else
+            p No items in your wishlist.
+        .add_more_from_wishlist 
+            button Add more from wishlist
+        .Price_details 
+            h5 Total MRP  ₹#{total_mrp}
+            h5 Discount on MRP 
+            h5 Platform fee 
+            h5 Shipping fee 
+            h4 Total Amount 
+            button Place Order 
+
+
+block script
+    script(src='https://code.jquery.com/jquery-3.7.1.min.js')
+    script
+        include ../public/js/home.js
+
+
+
+
+
+
+
+
+
+        //- .Address 
+        //- h3 Select Delivary Address 

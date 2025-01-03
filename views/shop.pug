@@ -1,0 +1,166 @@
+extends base.pug
+
+block style
+    style
+        include ../public/css/shop.css
+    link(href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet")
+
+block content
+    .shop-container
+        // Shop Header
+        .shop-header
+            h1 Art Fusion Shop
+            p Discover unique handcrafted pieces from talented artists
+
+        // Filter and Sort Section
+        .shop-controls
+            .filters
+                select#categoryFilter
+                    option(value="all") All Categories
+                    option(value="jewelry") Jewelry
+                    option(value="crochet") Crochet & Knitting
+                    option(value="accessories") Accessories
+                    option(value="handbags") Handbags
+
+                select#priceFilter
+                    option(value="all") Price Range
+                    option(value="0-1000") Under ₹1,000
+                    option(value="1000-3000") ₹1,000 - ₹3,000
+                    option(value="3000+") Above ₹3,000
+
+            .sort
+                select#sortProducts
+                    option(value="featured") Featured
+                    option(value="price-low") Price: Low to High
+                    option(value="price-high") Price: High to Low
+                    option(value="newest") Newest First
+
+        // Products Grid
+        .products-grid
+            // Custom Name Necklace
+            .product-card
+                .product-image
+                    img(src="../img/necklace.png" alt="necklace")
+                    .product-overlay
+                        button.quick-view Quick View
+                        button.add-to-cart(data-id="1") Add to Cart
+                        button.add-to-wishlist(data-id="1") Wishlist
+                .product-details
+                    .product-category Jewelry
+                    h3 Custom Name Necklace
+                    .product-price
+                        span.price ₹1,116
+                        span.original-price ₹1,495
+                    .product-seller
+                        span Anya shop studio
+                        .rating ★★★★☆ (4.2)
+
+            // Crochet Flowers
+            .product-card
+                .product-image
+                    img(src="../img/crochetflowers.png" alt="crochetflowers")
+                    .product-overlay
+                        button.quick-view Quick View
+                        button.add-to-cart(data-id="2") Add to Cart
+                        button.add-to-wishlist(data-id="2") Wishlist
+                .product-details
+                    .product-category Crochet
+                    h3 Crochet Tulip Pattern
+                    .product-price
+                        span.price ₹437
+                    .product-seller
+                        span my creative butterfly
+                        .rating ★★★★★ (4.8)
+
+            // Purse Strap
+            .product-card
+                .product-image
+                    img(src="../img/Purse-strap.png" alt="Purse strap")
+                    .product-overlay
+                        button.quick-view Quick View
+                        button.add-to-cart(data-id="3") Add to Cart
+                        button.add-to-wishlist(data-id="3") Wishlist
+                .product-details
+                    .product-category Accessories
+                    h3 Adjustable Cotton Embroidery Webbing Shoulder Purse Strap
+                    .product-price
+                        span.price ₹1,488
+                        span.original-price ₹1,999
+                    .product-seller
+                        span Warman Boutique
+                        .rating ★★★★☆ (4.1)
+
+            // Handbag
+            .product-card
+                .product-image
+                    img(src="../img/handbag.png" alt="Hand bag")
+                    .product-overlay
+                        button.quick-view Quick View
+                        button.add-to-cart(data-id="4") Add to Cart
+                        button.add-to-wishlist(data-id="4") Wishlist
+                .product-details
+                    .product-category Handbags
+                    h3 Faux Embroidery Wildflower Cross Body Hand Bag
+                    .product-price
+                        span.price ₹3,725
+                    .product-seller
+                        span CharmedandWyld
+                        .rating ★★★★★ (4.9)
+
+            // Sweaters
+            .product-card
+                .product-image
+                    img(src="../img/sweaters.png" alt="sweaters")
+                    .product-overlay
+                        button.quick-view Quick View
+                        button.add-to-cart(data-id="5") Add to Cart
+                        button.add-to-wishlist(data-id="5") Wishlist
+                .product-details
+                    .product-category Knitting
+                    h3 Handknit Cozy Sweaters
+                    .product-price
+                        span.price  ₹4,299
+                    .product-seller
+                        span KnitWear
+                        .rating &#9733;&#9733;&#9733;&#9733; (4.1) 
+
+
+            //Resin Necklace
+            .product-card
+                .product-image
+                    img(src="../img/resinnecklace.png" alt="resin necklace")
+                    .product-overlay
+                        button.quick-view Quick View
+                        button.add-to-cart(data-id="6") Add to Cart
+                        button.add-to-wishlist(data-id="6") Wishlist
+                .product-details
+                    .product-category Jewelry
+                    h3 Handmade Resin Necklace
+                    .product-price
+                        span.price  ₹2,999
+                    .product-seller
+                        span JewelryHub
+                        .rating &#9733;&#9733;&#9733; (3.2) 
+block script
+    script(src='https://code.jquery.com/jquery-3.7.1.min.js')
+    script(src='/js/home.js')
+
+
+
+
+
+
+
+
+
+
+        // Pagination
+        .pagination
+            button.prev-page ← Previous
+            .page-numbers
+                span.active 1
+                span 2
+                span 3
+                span ...
+                span 10
+            button.next-page Next →

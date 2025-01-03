@@ -1,0 +1,30 @@
+extends base.pug
+
+
+block style 
+    style
+        include ../public/css/wishlist.css
+        
+block content 
+    section.wishlist-section
+        h2 Your Wishlist
+        if products.length > 0
+            -let i = 0
+            div.wishlist-items
+                ul
+                    while i < products.length
+
+                        -let product = products[i]
+                        li  
+                            img(src=`${product.Image}` alt=product.Name)
+                            h4= product.Name
+                            p ₹#{product.Price}
+                            button.remove-from-wishlist(data-id=`${product.Id}`) Remove
+                        - i++
+        else
+            p No items in your wishlist.
+
+block script
+    script(src='https://code.jquery.com/jquery-3.7.1.min.js')
+    script
+        include ../public/js/home.js

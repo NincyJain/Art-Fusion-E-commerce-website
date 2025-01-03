@@ -1,0 +1,81 @@
+extends base.pug
+
+block style 
+    style 
+        include ../public/css/login_page.css
+
+block content
+    .container 
+        .user-type-selector
+            button.user-type-btn(type="button" onclick="SwitchUserType('buyer', event)") Buyer
+            button.user-type-btn(type="button" onclick="SwitchUserType('seller', event)") Seller
+
+        .forms-container
+            //- Buyer Login Form
+            form#buyer-login.form
+                .toggle-form
+                    button(type="button" onclick="toggleForm()") Don't have an account? Sign Up
+                .form-group
+                    label(for="buyer-login-email") Email
+                    input#buyer-login-email(type="email" required)
+                .form-group
+                    label(for="buyer-login-password") Password
+                    input#buyer-login-password(type="password" required)
+                button(type="submit") Login as Buyer
+
+            //- Buyer Signup Form
+            form#buyer-signup.form.hidden
+                .toggle-form
+                    button(type="button" onclick="toggleForm()") Already have an account? Login
+                .form-group
+                    label(for="buyer-signup-name") Full Name
+                    input#buyer-signup-name(type="text" name="username" required)
+                .form-group
+                    label(for="buyer-signup-email") Email
+                    input#buyer-signup-email(type="email" name="email" required)
+                .form-group
+                    label(for="buyer-signup-password") Password
+                    input#buyer-signup-password(type="password" name="password" required)
+                .form-group
+                    label(for="buyer-signup-confirm") Confirm Password
+                    input#buyer-signup-confirm(type="password" required)
+                button(type="submit") Sign Up as Buyer
+
+            //- Seller Login Form
+            form#seller-login.form.hidden
+                .toggle-form
+                    button(type="button" onclick="toggleForm()") Don't have an account? Sign Up
+                .form-group
+                    label(for="seller-login-email") Business Email
+                    input#seller-login-email(type="email" required)
+                .form-group
+                    label(for="seller-login-password") Password
+                    input#seller-login-password(type="password" required)
+                button(type="submit") Login as Seller
+
+            //- Seller Signup Form
+            form#seller-signup.form.hidden
+                .toggle-form
+                    button(type="button" onclick="toggleForm()") Already have an account? Login
+                .form-group
+                    label(for="seller-signup-business") Business Name
+                    input#seller-signup-business(type="text" required)
+                .form-group
+                    label(for="seller-signup-email") Business Email
+                    input#seller-signup-email(type="email" name="email" required)
+                .form-group
+                    label(for="seller-signup-password") Password
+                    input#seller-signup-password(type="password" required)
+                .form-group
+                    label(for="seller-signup-confirm") Confirm Password
+                    input#seller-signup-confirm(type="password" name="password" required)
+                button(type="submit") Sign Up as Seller
+
+block script
+    script(src='https://code.jquery.com/jquery-3.7.1.min.js')
+    script
+        include ../public/js/auth.js
+
+
+
+

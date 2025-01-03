@@ -1,0 +1,247 @@
+/* Shop Page Styles */
+.shop-container {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+  }
+  
+  /* Shop Header */
+  .shop-header {
+    text-align: center;
+    margin: 3rem 0;
+  }
+  
+  .shop-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .shop-header p {
+    color: #666;
+    font-size: 1.1rem;
+  }
+  
+  /* Filter and Sort Controls */
+  .shop-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .filters, .sort {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  select {
+    padding: 0.8rem 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  select:hover {
+    border-color: #4CAF50;
+  }
+  
+  /* Products Grid */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  /* Product Card */
+  .product-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-image {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+  }
+  
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .product-card:hover .product-image img {
+    transform: scale(1.05);
+  }
+  
+  .product-overlay {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    transition: bottom 0.3s ease;
+  }
+  
+  .product-card:hover .product-overlay {
+    bottom: 0;
+  }
+  
+  .quick-view, .add-to-cart {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .quick-view {
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  
+  .add-to-cart .add-to-wishlist {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .quick-view:hover {
+    background-color: #e9ecef;
+  }
+  
+  .add-to-cart:hover .add-to-wishlist:hover {
+    background-color: #45a049;
+  }
+  
+  /* Product Details */
+  .product-details {
+    padding: 1.5rem;
+  }
+  
+  .product-category {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+  
+  .product-details h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+    line-height: 1.4;
+  }
+  
+  .product-price {
+    margin-bottom: 0.5rem;
+  }
+  
+  .price {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #4CAF50;
+  }
+  
+  .original-price {
+    margin-left: 0.5rem;
+    color: #999;
+    text-decoration: line-through;
+    font-size: 0.9rem;
+  }
+  
+  .product-seller {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .rating {
+    color: #ffc107;
+  }
+  
+  /* Pagination */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  
+  .page-numbers {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .page-numbers span {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .page-numbers span.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .prev-page, .next-page {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .prev-page:hover, .next-page:hover {
+    background-color: #f8f9fa;
+    border-color: #4CAF50;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .shop-container {
+      padding: 0 1rem;
+    }
+  
+    .shop-controls {
+      flex-direction: column;
+    }
+  
+    .filters, .sort {
+      width: 100%;
+    }
+  
+    select {
+      width: 100%;
+    }
+  
+    .products-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+  }
