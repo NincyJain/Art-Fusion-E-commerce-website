@@ -17,10 +17,10 @@ block content
                     button(type="button" onclick="toggleForm()") Don't have an account? Sign Up
                 .form-group
                     label(for="buyer-login-email") Email
-                    input#buyer-login-email(type="email" name='email' required)
+                    input#buyer-login-email(type="email" name="email" required)
                 .form-group
                     label(for="buyer-login-password") Password
-                    input#buyer-login-password(type="password" required)
+                    input#buyer-login-password(type="password" name="password" required)
                 button(type="submit") Login as Buyer
 
             //- Buyer Signup Form
@@ -47,10 +47,10 @@ block content
                     button(type="button" onclick="toggleForm()") Don't have an account? Sign Up
                 .form-group
                     label(for="seller-login-email") Business Email
-                    input#seller-login-email(type="email" required)
+                    input#seller-login-email(type="email" name="email" required)
                 .form-group
                     label(for="seller-login-password") Password
-                    input#seller-login-password(type="password" required)
+                    input#seller-login-password(type="password" name="passwords" required)
                 button(type="submit") Login as Seller
 
             //- Seller Signup Form
@@ -74,7 +74,7 @@ block content
 block script
     script(src='https://code.jquery.com/jquery-3.7.1.min.js')
     script
-        include ../public/js/auth.js
+        include ../public/js/auth1.js
 
 
 
