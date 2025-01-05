@@ -2,13 +2,15 @@
 const express = require('express');
 const router = express.Router();
 const { executeStoredProcedure } = require('../utils/dbhelpers');
+let Random_Id;
 
 function generateNumericId(length) {
     let randomId = '';
     for (let i = 0; i < length; i++) {
         randomId += Math.floor(Math.random() * 10); // Append a random digit (0-9)
     }
-    return randomId;
+    Random_Id = randomId;
+    return Random_Id
 }
 
 // Login/Signup page render
@@ -71,4 +73,8 @@ router.post('/', async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = {
+    router,
+    Random_Id
+  };
+  

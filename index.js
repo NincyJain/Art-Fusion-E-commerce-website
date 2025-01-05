@@ -38,9 +38,9 @@ app.get('/dashboard', (req, res) => {
     res.render("home");
 });
 
-// app.get('/dashboard', (req, res) => {
-//     res.render("dash");
-// });
+app.get('/seller-dashboard', (req, res) => {
+    res.render("seller-dashboard");
+});
 
 // app.get('/login', (req, res) => {
 //     res.render("login");
@@ -63,10 +63,10 @@ app.get('/contactus', (req, res) => {
 });
 
 // API Routes
-app.use('/', authRoutes);
+app.use('/', authRoutes.router);
 app.use('/cart', cartRoutes);
 app.use('/wishlist', wishlistRoutes);
-app.use('/seller', sellerRoutes);
+// app.use('/seller', sellerRoutes);
 // app.use('/upload', uploadRoutes);
 
 // Error handling middleware
