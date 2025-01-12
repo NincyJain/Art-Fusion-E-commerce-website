@@ -3,7 +3,7 @@ extends base.pug
 block style
     style
         include ../public/css/shop.css
-    link(href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet")
+        link(href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet")
 
 block content
     .shop-container
@@ -141,17 +141,6 @@ block content
                     .product-seller
                         span JewelryHub
                         .rating &#9733;&#9733;&#9733; (3.2) 
-block script
-    script(src='https://code.jquery.com/jquery-3.7.1.min.js')
-    script(src='/js/home1.js')
-
-
-
-
-
-
-
-
 
 
         // Pagination
@@ -164,3 +153,10 @@ block script
                 span ...
                 span 10
             button.next-page Next →
+
+block script
+    script(src='https://code.jquery.com/jquery-3.7.1.min.js')
+    script
+        include ../public/js/home1.js
+    script 
+        include ../public/js/base.js

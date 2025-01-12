@@ -6,6 +6,7 @@
     display: grid;
     grid-template-columns: 2fr 1fr;  /* Creates two columns */
     gap: 30px;
+    height: 100%;
 }
 
 /* Left column container */
@@ -15,6 +16,7 @@
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    height: 100vh;
 }
 
 .cart_items ul {
@@ -31,6 +33,9 @@
     gap: 20px;
     padding: 15px;
     border-bottom: 1px solid #eee;
+}
+.cart_items li h4{
+    width: 20vw;
 }
 
 .cart_items img {
@@ -99,7 +104,7 @@
 }
 
 .Price_details h5::after {
-    content: '₹0';
+    
     color: #333;
 }
 
@@ -114,7 +119,7 @@
     font-weight: 600;
 }
 
-.Price_details button {
+.Price_details button{
     width: 100%;
     padding: 15px 0;
     background-color: #ff4d6d;
@@ -127,7 +132,23 @@
     transition: background-color 0.3s ease;
 }
 
-.Price_details button:hover {
+.Price_details button:hover{
+    background-color: #ff3557;
+}
+
+.remove-from-cart{
+    width: 10vw;
+    padding: 10px 0;
+    background-color: #ff4d6d;
+    color: white;
+    border: none;
+    border-radius: 6px; 
+
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remove-from-cart:hover{
     background-color: #ff3557;
 }
 

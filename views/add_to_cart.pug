@@ -10,33 +10,47 @@ block content
 
         if products.length > 0 
             -let i = 0
-            -let total_mrp = 0
+            -var final_price = 0
+            -var total_mrp = 0
+            -var price_after_disc = 0
+            -var discount_on_mrp = 0
+            -var platform_fee = 20
+            -var shipping = 100
+
             div.cart_items
 
                 ul
                     while i < products.length
-                        -let product = products[i]//it is not a object 
+                        -let product = products[i]//it is not a object
+                        -total_mrp += parseInt(product.Price.replace(/[^\d.-]/g, '')) || 0
+                        
+                        
 
-                        -total_mrp += parseInt(product.Price)
-                        p #{total_mrp}
                         li 
                             img(src=product.Image alt=product.Name)
                             h4= product.Name
                             p ₹#{product.Price}
                             span 14 days return available
                             span Delivery in 3 days
-                            button.remove-from-wishlist(data-id=`${product.Id}`) Remove
+                            button.remove-from-cart(data-id=`${product.Id}`) Remove
                         - i++
         else
             p No items in your wishlist.
         .add_more_from_wishlist 
             button Add more from wishlist
         .Price_details 
-            h5 Total MRP  ₹#{total_mrp}
-            h5 Discount on MRP 
+            h5 Total MRP 
+                span ₹#{total_mrp}
+            h5 Discount on MRP  
+                span 18%
             h5 Platform fee 
+                span ₹20
             h5 Shipping fee 
+                span ₹100
+            -price_after_disc = total_mrp - (0.18 * total_mrp)
+            -final_price += price_after_disc + platform_fee + shipping
             h4 Total Amount 
+                span ₹#{final_price.toFixed(2)}
             button Place Order 
 
 
@@ -44,7 +58,8 @@ block script
     script(src='https://code.jquery.com/jquery-3.7.1.min.js')
     script
         include ../public/js/home1.js
-
+    script 
+        include ../public/js/base.js
 
 
 
