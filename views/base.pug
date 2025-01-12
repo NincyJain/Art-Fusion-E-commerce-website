@@ -1,15 +1,18 @@
-html
+doctype html
+html(lang="en")
   head
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     title Art Fusion
     style
       include ../public/css/base.css
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css")
     block style
+
   body
     nav.navigation-bar
       div#logo
-        img(src="../img/logo.png" alt="logo")
+        img(src="/img/logo.png" alt="logo")
         h3 Art Fusion
       ul
         li.items: a(href="/dashboard") Home
@@ -17,18 +20,35 @@ html
         li.items: a(href="/blog") Blog
         li.items: a(href="/about") About
         li.items: a(href="/contactus") Contact
-        li.items: a(href="/cart"): img.cart(src="../img/cart.png" alt="Cart")
-        li.items: a(href="/wishlist"): img.cart(src="../img/wishlist.png" alt="Wishlist")
+        //- li.items: a(href="/cart"): img.cart(src="/img/cart.png" alt="Cart")
+        //- li.items: a(href="/wishlist"): img.cart(src="/img/wishlist.png" alt="Wishlist")
+        li.items: .profile-dropdown
+          img.profile-icon(src="/img/profileimage.png" alt="Profile" style="cursor: pointer;")
+          .dropdown-content
+            .user-info
+              img.profile-avatar(src="/img/profileimage.png" alt="Avatar")
+              span.username #{username || 'Guest'}
+            a(href="/profile")
+              i.fas.fa-user
+              | Profile
+            a(href="/wishlist")
+              i.fas.fa-heart
+              | My Wishlist
+            a(href="/cart")
+              i.fas.fa-shopping-cart
+              | My Cart
+            .dropdown-divider
+            a.logout-btn(href="/logout")
+              i.fas.fa-sign-out-alt
+              | Logout
+
     block content
-    block script 
-      script(src='./public/js/script.js')
-      script(src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous")
-      script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous")
+
     block foot
       footer.footer-section
         .footer-container
           .footer-logo
-            img(src="../img/logo.png" alt="Art Fusion Logo")
+            img(src="/img/logo.png" alt="Art Fusion Logo")
           .footer-links
             .contact-social
               div
@@ -39,11 +59,11 @@ html
                 h4 Follow Us
                 ul.social-icons
                   li: a(href="#")
-                    img(src="../img/facebook.png" alt="Facebook")
+                    img(src="/img/facebook.png" alt="Facebook")
                   li: a(href="#")
-                    img(src="../img/instagram.png" alt="Instagram")
+                    img(src="/img/instagram.png" alt="Instagram")
                   li: a(href="#")
-                    img(src="../img/pintrest.png" alt="Pinterest")
+                    img(src="/img/pintrest.png" alt="Pinterest")
             .about-section
               h4 About
               p Your one-stop shop for all things creative. Discover, buy, and sell art effortlessly.
@@ -56,8 +76,10 @@ html
             .payment-section
               h4 Payment Gateway
               ul.payment-icons
-                li: img(src="../img/paypal.png" alt="PayPal")
-                li: img(src="../img/visa.png" alt="Visa")
-                li: img(src="../img/mastercard.png" alt="MasterCard")
+                li: img(src="/img/paypal.png" alt="PayPal")
+                li: img(src="/img/visa.png" alt="Visa")
+                li: img(src="/img/mastercard.png" alt="MasterCard")
 
-
+    block script
+      script(src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous")
+      script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous")

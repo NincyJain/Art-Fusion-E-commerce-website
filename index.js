@@ -5,6 +5,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const { testConnection } = require('./config/database');
+const session = require('express-session');
+
 
 // Port configuration
 const port = process.env.PORT || 80;
@@ -22,6 +24,13 @@ app.use(express.static(path.join(__dirname, 'public'), {
     }
 }));
 
+// Session setup
+app.use(session({
+    secret: 'sefqehw4ytyegw32363423tethr4gw4y',
+    resave: false,
+    saveUninitialized: false
+}));
+
 // View engine setup
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
@@ -31,6 +40,7 @@ const authRoutes = require('./routes/auth');
 const cartRoutes = require('./routes/cart');
 const wishlistRoutes = require('./routes/wishlist');
 const sellerRoutes = require('./routes/seller');
+
 // const uploadRoutes = require('./routes/upload');
 
 // Basic page routes
@@ -62,10 +72,15 @@ app.get('/contactus', (req, res) => {
     res.render("contactus");
 });
 
+
+
 // API Routes
 app.use('/', authRoutes.router);
 app.use('/cart', cartRoutes);
 app.use('/wishlist', wishlistRoutes);
+app.use('/seller', sellerRoutes);
+app.use('/logout', authRoutes.router);
+
 // app.use('/seller', sellerRoutes);
 // app.use('/upload', uploadRoutes);
 
