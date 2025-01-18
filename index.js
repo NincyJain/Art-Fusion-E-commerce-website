@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const { testConnection } = require('./config/database');
 const session = require('express-session');
+const stripe = require('./config/stripe');
 
 
 // Port configuration
@@ -40,6 +41,7 @@ const authRoutes = require('./routes/auth');
 const cartRoutes = require('./routes/cart');
 const wishlistRoutes = require('./routes/wishlist');
 const sellerRoutes = require('./routes/seller');
+const paymentRoutes = require('./routes/payment');
 
 // const uploadRoutes = require('./routes/upload');
 
@@ -73,16 +75,58 @@ app.get('/contactus', (req, res) => {
 });
 
 
+// app.post('/create-checkout-session', async(req, res)=>{
+//     try {
+//         console.log('Checkout session route hit');
+//         // Get cart items from session
+//         const cartItems = req.session.cart || [];
+        
+//         // Create line items for Stripe
+//         const lineItems = cartItems.map(item => ({
+//             price_data: {
+//                 currency: 'inr',
+//                 product_data: {
+//                     name: item.name,
+//                     images: [item.image],
+//                 },
+//                 unit_amount: item.price * 100, // Convert to smallest currency unit (paise)
+//             },
+//             quantity: item.quantity,
+//         }));
+
+//         // Create Stripe checkout session
+//         const session = await stripe.checkout.sessions.create({
+//             payment_method_types: ['card'],
+//             line_items: lineItems,
+//             mode: 'payment',
+//             success_url: `${process.env.DOMAIN}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+//             cancel_url: `${process.env.DOMAIN}/cart`,
+//         });
+
+//         res.json({ url: session.url });
+//     } catch (error) {
+//         console.error('Payment Error:', error);
+//         res.status(500).json({ error: 'Payment session creation failed' });
+//     }
+// })
 
 // API Routes
+
 app.use('/', authRoutes.router);
 app.use('/cart', cartRoutes);
 app.use('/wishlist', wishlistRoutes);
 app.use('/seller', sellerRoutes);
 app.use('/logout', authRoutes.router);
+app.use('/payment', paymentRoutes);
+
 
 // app.use('/seller', sellerRoutes);
 // app.use('/upload', uploadRoutes);
+
+app.use((req, res, next) => {
+    res.locals.user = req.session.user;
+    next();
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {

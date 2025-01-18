@@ -9,9 +9,9 @@ block content
         //- Sidebar
         .dashboard-sidebar
             //- .profile-section
-            //-     .profile-image
-            //-         img(src=artist.profileImage || "/images/default-profile.jpg" alt="Profile Image")
-            //-     h2.artist-name= artist.name || "Artist Name"
+            //-     //- .profile-image
+            //-     //-     img(src=artist.profileImage || "/images/default-profile.jpg" alt="Profile Image")
+            //-     h2.artist-name= username || "Artist Name"
             //-     p.follower-count
             //-         span.count= artist.followers || 0
             //-         |  Followers
@@ -77,7 +77,7 @@ block content
                     else
                         .no-artworks
                             p No artworks listed yet
-                            button.add-artwork Add Your First Artwork
+                            //- button.add-artwork Add Your First Artwork
 
             //- Recent Activity
             .recent-activity

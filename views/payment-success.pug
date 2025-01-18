@@ -1,0 +1,18 @@
+extends base
+
+
+
+block style 
+    style 
+        include ../public/css/payment-success.css
+
+block content
+  .success-container
+    .success-message
+      i.fas.fa-check-circle
+      h1 Payment Successful!
+      p Thank you for your purchase
+      .order-details
+        p Order ID: #{orderId}
+        p Total Amount: ₹#{total}
+      a.back-btn(href="/shop") Continue Shopping

@@ -1,4 +1,3 @@
-// routes/auth.js
 const express = require('express');
 const router = express.Router();
 const { executeStoredProcedure } = require('../utils/dbhelpers');
@@ -7,18 +6,16 @@ let Random_Id;
 function generateNumericId(length) {
     let randomId = '';
     for (let i = 0; i < length; i++) {
-        randomId += Math.floor(Math.random() * 10); // Append a random digit (0-9)
+        randomId += Math.floor(Math.random() * 10);
     }
     Random_Id = randomId;
     return Random_Id
 }
 
-// Login/Signup page render
 router.get('/', (req, res) => {
     res.render("login_page");
 });
 
-// Authentication API
 router.post('/', async (req, res) => {
     const { type, action, data } = req.body;
     
@@ -31,11 +28,32 @@ router.post('/', async (req, res) => {
             });
 
             if (result && result.length > 0) {
-                // User found - create session
-                res.json({ 
+                // Store user info in session
+                req.session.user = {
+                    id: result[0].id || Random_Id,
+                    username: result[0].Username,
+                    email: data.email,
+                    userType: type
+                };
+                console.log( {
+                    id: result[0].id || Random_Id,
+                    username: result[0].Username,
+                    email: data.email,
+                    userType: type
+                })
+
+                console.log({ 
                     success: true, 
+                    username: result[0].Username,
                     redirectUrl: type === 'buyer' ? '/dashboard' : '/seller-dashboard'
                 });
+                
+                res.json({ 
+                    success: true, 
+                    username: req.session.user.Username,
+                    redirectUrl: type === 'buyer' ? '/dashboard' : '/seller-dashboard'
+                });
+                
             } else {
                 res.status(401).json({ 
                     success: false, 
@@ -44,8 +62,9 @@ router.post('/', async (req, res) => {
             }
         } 
         else if (action === 'signup') {
+            const userId = generateNumericId(4);
             const result = await executeStoredProcedure('User_Signup_sp', {
-                id: generateNumericId(4),
+                id: userId,
                 email: data.email,
                 username: data.username,
                 password: data.password,
@@ -59,8 +78,17 @@ router.post('/', async (req, res) => {
                 });
             }
 
+            // Store user info in session after successful signup
+            req.session.user = {
+                id: userId,
+                username: data.username,
+                email: data.email,
+                userType: type
+            };
+
             res.json({ 
-                success: true, 
+                success: true,
+                username: data.username,
                 redirectUrl: type === 'buyer' ? '/dashboard' : '/seller-dashboard'
             });
         }
@@ -73,8 +101,12 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
+});
+
 module.exports = {
     router,
     Random_Id
-  };
-  
+};

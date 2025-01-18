@@ -51,7 +51,7 @@ block content
             -final_price += price_after_disc + platform_fee + shipping
             h4 Total Amount 
                 span ₹#{final_price.toFixed(2)}
-            button Place Order 
+            button#checkout-button.checkout-btn Place order 
 
 
 block script
@@ -60,6 +60,8 @@ block script
         include ../public/js/home1.js
     script 
         include ../public/js/base.js
+    script 
+        include ../public/js/checkout.js
 
 
 
