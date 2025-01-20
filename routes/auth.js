@@ -30,16 +30,16 @@ router.post('/', async (req, res) => {
             if (result && result.length > 0) {
                 // Store user info in session
                 req.session.user = {
-                    id: result[0].id || Random_Id,
+                    id: result[0].Id,
                     username: result[0].Username,
-                    email: data.email,
-                    userType: type
+                    email: result[0].Email,
+                    userType: result[0].UserType
                 };
-                console.log( {
-                    id: result[0].id || Random_Id,
+                console.log("Fetched while login: ", {
+                    id: result[0].Id,
                     username: result[0].Username,
-                    email: data.email,
-                    userType: type
+                    email: result[0].Email,
+                    userType: result[0].UserType
                 })
 
                 console.log({ 
@@ -85,11 +85,17 @@ router.post('/', async (req, res) => {
                 email: data.email,
                 userType: type
             };
+            console.log("Fetched while signup: ", {
+                id: userId,
+                username: data.username,
+                email: data.email,
+                userType: type
+            });
 
             res.json({ 
                 success: true,
                 username: data.username,
-                redirectUrl: type === 'buyer' ? '/dashboard' : '/seller-dashboard'
+                redirectUrl: type === 'buyer' ? '/' : '/'
             });
         }
     } catch (error) {
@@ -110,3 +116,4 @@ module.exports = {
     router,
     Random_Id
 };
+
