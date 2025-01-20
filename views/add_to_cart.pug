@@ -5,7 +5,7 @@ block style
         include ../public/css/add_to_cart.css
 
 block content 
-    //Add to cart section
+    // Add to cart section
     section.add_to_cart 
 
         if products.length > 0 
@@ -21,11 +21,9 @@ block content
 
                 ul
                     while i < products.length
-                        -let product = products[i]//it is not a object
-                        -total_mrp += parseInt(product.Price.replace(/[^\d.-]/g, '')) || 0
+                        -let product = products[i] // it is not an object
+                        -total_mrp += parseInt(product.Price.replace(/[^\d.-]/g, ''))
                         
-                        
-
                         li 
                             img(src=product.Image alt=product.Name)
                             h4= product.Name
@@ -34,25 +32,30 @@ block content
                             span Delivery in 3 days
                             button.remove-from-cart(data-id=`${product.Id}`) Remove
                         - i++
+            -price_after_disc = total_mrp - (0.18 * total_mrp)
+            -final_price += price_after_disc + platform_fee + shipping
+
         else
+            -var total_mrp = 0
+            -var platform_fee = 0
+            -var shipping = 0
+            -var final_price = 0
+            -var price_after_disc = 0
             p No items in your wishlist.
         .add_more_from_wishlist 
-            button Add more from wishlist
+            button(onclick="window.location.href='/wishlist'") Add more from wishlist 
         .Price_details 
             h5 Total MRP 
                 span ₹#{total_mrp}
             h5 Discount on MRP  
-                span 18%
+                span #{products.length > 0 ? '18%' : '0%'}
             h5 Platform fee 
-                span ₹20
+                span ₹#{platform_fee}
             h5 Shipping fee 
-                span ₹100
-            -price_after_disc = total_mrp - (0.18 * total_mrp)
-            -final_price += price_after_disc + platform_fee + shipping
-            h4 Total Amount 
-                span ₹#{final_price.toFixed(2)}
+                span ₹#{shipping}"
+            h4 Total Amount
+                span ₹#{final_price.toFixed(2) || final_price}
             button#checkout-button.checkout-btn Place order 
-
 
 block script
     script(src='https://code.jquery.com/jquery-3.7.1.min.js')
@@ -62,13 +65,3 @@ block script
         include ../public/js/base.js
     script 
         include ../public/js/checkout.js
-
-
-
-
-
-
-
-
-        //- .Address 
-        //- h3 Select Delivary Address 
