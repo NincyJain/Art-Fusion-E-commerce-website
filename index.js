@@ -42,6 +42,8 @@ const cartRoutes = require('./routes/cart');
 const wishlistRoutes = require('./routes/wishlist');
 const sellerRoutes = require('./routes/seller');
 const paymentRoutes = require('./routes/payment');
+const ordersRoutes = require('./routes/order');
+
 
 // const uploadRoutes = require('./routes/upload');
 
@@ -50,9 +52,9 @@ app.get('/dashboard', (req, res) => {
     res.render("home");
 });
 
-app.get('/seller-dashboard', (req, res) => {
-    res.render("seller-dashboard");
-});
+// app.get('/seller-dashboard', (req, res) => {
+//     res.render("seller-dashboard");
+// });
 
 // app.get('/login', (req, res) => {
 //     res.render("login");
@@ -118,6 +120,7 @@ app.use('/wishlist', wishlistRoutes);
 app.use('/seller', sellerRoutes);
 app.use('/logout', authRoutes.router);
 app.use('/payment', paymentRoutes);
+app.use('/my-orders', ordersRoutes);
 
 
 // app.use('/seller', sellerRoutes);

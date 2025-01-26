@@ -1,0 +1,22 @@
+extends base.pug
+block content
+   div(style="max-width: 1200px; margin: 40px auto; padding: 0 20px;")
+       h1(style="font-size: 1.875rem; font-weight: bold; margin-bottom: 1.5rem;") My Orders
+      
+       if orders && orders.length > 0
+           div(style="display: grid; gap: 1.5rem;")
+               each order in orders
+                   div(style="background: white; border-radius: 0.75rem; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);")
+                       div(style="display: flex; justify-content: space-between; margin-bottom: 1rem;")
+                           span(style="color: #4B5563;")= order.created_at
+                      
+                       div(style="margin-bottom: 1rem;")
+                      
+                       div(style="display: grid; grid-template-columns: 120px 1fr; gap: 1rem; padding: 1rem; border-top: 1px solid #eee;")
+                           img(src=order.Image alt=order.Name style="width: 120px; height: 120px; object-fit: cover; border-radius: 0.5rem;")
+                           div
+                               h3(style="font-weight: 500;")= order.Name
+                               p(style="font-weight: 500;") ₹#{order.Price}
+       else
+           div(style="text-align: center; padding: 3rem 0;")
+               p(style="font-size: 1.25rem; color: #4B5563;") No orders found

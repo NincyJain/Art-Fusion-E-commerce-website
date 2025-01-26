@@ -2,6 +2,15 @@ const express = require('express');
 const router = express.Router();
 const stripe = require('../config/stripe');
 const { executeStoredProcedure } = require('../utils/dbhelpers');
+var OrderID = ''
+
+function generateOrderId(length) {
+    let orderId = '';
+    for (let i = 0; i < length; i++) {
+        orderId += Math.floor(Math.random() * 10);
+    }
+    OrderID = orderId;
+}
 
 router.post('/create-checkout-session', async (req, res) => {
     try {
@@ -52,7 +61,6 @@ router.post('/create-checkout-session', async (req, res) => {
 router.get('/success', async (req, res) => {
     try {
         const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
-        
         if (session.payment_status === 'paid') {
             // Get user ID from session
             const userId = 1;
@@ -63,7 +71,9 @@ router.get('/success', async (req, res) => {
 
             try {
                 // Get the SQL pool from your connection
-                await executeStoredProcedure('after_payment_clear_cart_sp', {userId: userId});
+                generateOrderId(6);
+                console.log("order ID:", OrderID)
+                await executeStoredProcedure('after_payment_clear_cart_sp', {userId: userId, orderid: OrderID});
                 
                 console.log('Cart cleared successfully for user:', userId);
                 
@@ -74,14 +84,14 @@ router.get('/success', async (req, res) => {
                 const order = {
                     userId: userId,
                     total: session.amount_total / 100,
-                    paymentId: session.id,
+                    paymentId: OrderID,
                     status: 'paid'
                 };
                 
                 // TODO: Save order to your database here
                 
                 res.render('payment-success', {
-                    orderId: order.id,
+                    orderId: order.paymentId,
                     total: order.total
                 });
             } catch (sqlError) {

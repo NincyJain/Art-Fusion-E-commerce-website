@@ -45,13 +45,13 @@ router.post('/', async (req, res) => {
                 console.log({ 
                     success: true, 
                     username: result[0].Username,
-                    redirectUrl: type === 'buyer' ? '/dashboard' : '/seller-dashboard'
+                    redirectUrl: type === 'buyer' ? '/dashboard' : '/seller-dashboard' && '/seller'
                 });
                 
                 res.json({ 
                     success: true, 
                     username: req.session.user.Username,
-                    redirectUrl: type === 'buyer' ? '/dashboard' : '/seller-dashboard'
+                    redirectUrl: type === 'buyer' ? '/dashboard' : '/seller'
                 });
                 
             } else {
