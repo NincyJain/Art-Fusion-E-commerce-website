@@ -24,6 +24,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         <input type="file" id="artworkImage" name="image" accept="image/*" required>
                     </div>
                     <div class="form-group">
+                        <label for="artworkProductTag">Product Tag</label>
+                        <input type="text" id="artworkProductTag" name="product_tag" required>
+                    </div>
+                    <div class="form-group">
                         <label for="artworkDescription">Description</label>
                         <textarea id="artworkDescription" name="description"></textarea>
                     </div>
@@ -43,7 +47,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Show Add Artwork Modal
     addArtworkBtn.addEventListener('click', () => {
+        console.log("clicked the add-artwork button!")
         modal.style.display = 'block';
+        addArtworkForm.reset();
     });
     
     // Close Modal
@@ -63,8 +69,47 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         const formData = new FormData(addArtworkForm);
+        console.log(formData)
+
+        // Validate inputs
+        const title = formData.get('title').trim();
+        const price = parseFloat(formData.get('price'));
+        const image = formData.get('image');
+        
+        if (!title) {
+            showError('Title is required');
+            return;
+        }
+        
+        if (!price || price <= 0) {
+            showError('Please enter a valid price');
+            return;
+        }
+        
+        if (!image || !image.size) {
+            showError('Please select an image');
+            return;
+        }
+        
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (!allowedTypes.includes(image.type)) {
+            showError('Please upload a valid image file (JPEG, PNG, or GIF)');
+            return;
+        }
+        
+        if (image.size > 5 * 1024 * 1024) {
+            showError('Image size should be less than 5MB');
+            return;
+        }
         
         try {
+
+            const submitBtn = addArtworkForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Uploading...';
+
+
             const response = await fetch('/seller/artwork/add', {
                 method: 'POST',
                 body: formData
@@ -73,7 +118,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             
             if (data.success) {
-                // Refresh the artwork grid
+                addArtworkForm.reset();
+                modal.style.display = 'none';
                 location.reload();
             } else {
                 alert(data.message || 'Failed to add artwork');
@@ -83,6 +129,12 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Failed to add artwork');
         }
     });
+
+    function showError(message) {
+        formFeedback.textContent = message;
+        formFeedback.style.color = 'red';
+        formFeedback.style.marginTop = '10px';
+    }
     
     // Handle Edit Artwork
     document.querySelectorAll('.artwork-actions .edit').forEach(button => {
@@ -154,6 +206,11 @@ async function updateArtwork(event, artworkId) {
         title: form.title.value,
         price: form.price.value
     };
+
+    if (!data.title || !data.price || data.price <= 0) {
+        alert('Please fill all fields correctly');
+        return;
+    }
     
     try {
         const response = await fetch(`/seller/artwork/${artworkId}`, {

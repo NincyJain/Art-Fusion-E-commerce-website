@@ -92,8 +92,11 @@
 
 /* Stats Cards */
 .stats-header {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+    align-items: center;
+    width: 65vw;
+    justify-content: center;
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
@@ -101,6 +104,7 @@
 .stat-card {
     background: white;
     padding: 1.5rem;
+    width: 12vw;
     border-radius: 12px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
@@ -235,3 +239,148 @@
     font-size: 0.8rem;
 }
 
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+    position: absolute;
+    right: 1.5rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.modal h2 {
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-group input[type="file"] {
+    padding: 0.5rem 0;
+}
+
+#addArtworkForm button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+#addArtworkForm button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#addArtworkForm button[type="submit"]:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+/* New Artwork List Styles */
+.artwork-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.artwork-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    gap: 1.5rem;
+}
+
+.artwork-thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.artwork-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.artwork-id {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.artwork-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.artwork-tag {
+    display: inline-block;
+    width: 10vw;
+    background: #f0f0f0;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.artwork-price {
+    font-weight: 600;
+    color: #2d8630;
+    font-size: 1.1rem;
+}

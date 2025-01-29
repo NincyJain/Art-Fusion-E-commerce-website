@@ -44,7 +44,7 @@ block content
                     p.stat-value= totalArtworks || 0
                 .stat-card
                     h3 Views This Month
-                    p.stat-value= monthlyViews || 0
+                    p.stat-value #{Artist__views_this_month || 0}
 
             //- Art Management Section
             .artwork-section
@@ -53,47 +53,26 @@ block content
                     button.add-artwork
                         i.fas.fa-plus
                         | Add New Artwork
-
-                //- Artwork Grid
-                .artwork-grid
+                .artwork-list
+                    //- Individual Artwork Item
                     if artworks && artworks.length > 0
                         each artwork in artworks
-                            .artwork-card
-                                .artwork-image
-                                    img(src=artwork.image alt=artwork.title)
-                                .artwork-details
-                                    h3= artwork.title
-                                    p.price ₹#{artwork.price}
-                                    .artwork-stats
-                                        span
-                                            i.fas.fa-eye
-                                            | #{artwork.views || 0}
-                                        span
-                                            i.fas.fa-heart
-                                            | #{artwork.likes || 0}
-                                    .artwork-actions
-                                        button.edit Edit
-                                        button.delete Delete
+                            .artwork-item
+                                img.artwork-thumbnail(src=artwork.image_url alt=artwork.Title)
+                                .artwork-info
+                                    span.artwork-id Artwork ID: #{artwork.Artwork_id}
+                                    h3.artwork-name #{artwork.Title}
+                                    span.artwork-tag #{artwork.Product_tag}
+                                .artwork-price ₹#{artwork.Price}
+                                .artwork-actions
+                                    button.edit Edit
+                                    button.delete Delete
                     else
                         .no-artworks
                             p No artworks listed yet
-                            //- button.add-artwork Add Your First Artwork
-
-            //- Recent Activity
-            .recent-activity
-                h2 Recent Activity
-                .activity-list
-                    if activities && activities.length > 0
-                        each activity in activities
-                            .activity-item
-                                i(class=activity.icon)
-                                .activity-content
-                                    p= activity.description
-                                    small= activity.time
-                    else
-                        p.no-activity No recent activity
-
+                
 block script
     script(src="https://kit.fontawesome.com/your-kit-code.js")
+    script(src='https://code.jquery.com/jquery-3.7.1.min.js')
     script
         include ../public/js/seller-dashboard.js

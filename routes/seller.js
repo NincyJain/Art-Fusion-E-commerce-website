@@ -3,34 +3,59 @@ const express = require('express');
 const router = express.Router();
 const { executeStoredProcedure } = require('../utils/dbhelpers');
 const upload = require('../config/multer');
-const { Random_Id } = require('./auth');
+
+var Random_Id;
+
+function generateNumericId(length) {
+    let randomId = '';
+    for (let i = 0; i < length; i++) {
+        randomId += Math.floor(Math.random() * 10);
+    }
+    Random_Id = randomId;
+    return Random_Id
+}
 
 // Get seller dashboard
 router.get('/', async (req, res) => {
+    console.log(req.session.user.email)
     try {
-        const sellerId = Random_Id; // TODO: Replace with actual user authentication
+        const getId = await executeStoredProcedure('GetIdandUsernameSp', {
+            email: req.session.user.email,
+            usertype: 'seller'
+        }); 
+
+        const sellerId = getId[0]['ID']
+        console.log(sellerId)
         
         // Get all dashboard data using single stored procedure
-        const results = await executeStoredProcedure('sp_GetSellerDashboard', {
-            sellerId: sellerId
+        const result = await executeStoredProcedure('sp_GetSellerDashboard', {
+            artist_id: sellerId
         });
+
+        let results = JSON.parse(result[0]['JSON_F52E2B61-18A1-11d1-B105-00805F49916B'])
+        console.log("Results: ", results)
         
         // Extract data from results (stored procedure returns multiple result sets)
-        const artist = results[0][0];          // First result set: artist info
-        const totalSales = results[1][0].totalSales;    // Second result set: total sales
-        const totalArtworks = results[2][0].totalArtworks; // Third result set: artwork count
-        const monthlyViews = results[3][0].monthlyViews;   // Fourth result set: monthly views
-        const artworks = results[4];           // Fifth result set: artworks
-        const activities = results[5];         // Sixth result set: activities
+        //const artist = results[0][0];          
+        const totalSales = results['totalSales'];   
+        const totalArtworks = results['totalArtworks']; 
+        const Artist__views_this_month = results['artistInfo'];   
         
+        const displayArtworks = await executeStoredProcedure('[dbo].[GetAllArtworkDetailsSp]',{
+            artistid: sellerId,
+            username: req.session.user.username
+
+        })
+
         res.render('seller-dashboard', {
-            artist,
+            //artist,
             totalSales,
             totalArtworks,
-            monthlyViews,
-            artworks,
-            activities
+            Artist__views_this_month,
+            artworks: displayArtworks
+
         });
+
     } catch (error) {
         console.error('Dashboard error:', error);
         res.status(500).render('error', { 
@@ -39,26 +64,69 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Add new artwork
+//Add new artwork
 router.post('/artwork/add', upload.single('image'), async (req, res) => {
     try {
-        const sellerId = 1; // TODO: Replace with actual user authentication
-        const { title, price, description } = req.body;
-        const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
 
-        const result = await executeStoredProcedure('sp_AddArtwork', {
-            sellerId,
+        if (!req.session || !req.session.user.email) {
+            return res.status(401).json({
+                success: false,
+                message: 'Please login to continue'
+            });
+        }
+
+        const getId = await executeStoredProcedure('GetIdandUsernameSp', {
+            email: req.session.user.email,
+            usertype: 'seller'
+        });
+
+        if (!getId || !getId[0]) {
+            return res.status(403).json({
+                success: false,
+                message: 'Seller account not found'
+            });
+        }
+
+        const sellerId = getId[0]['ID'];
+
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: 'Image upload is required'
+            });
+        }
+
+        const { title, price, product_tag, description } = req.body;
+        console.log("Title: ", title)
+        if (!title || !price) {
+            return res.status(400).json({
+                success: false,
+                message: 'Title and price are required'
+            });
+        }
+
+        const imagePath = `/uploads/${req.file.filename}`;
+
+        generateNumericId(4);
+
+        const result = await executeStoredProcedure('[dbo].[UploadArtworksp]', {
+            artistid: sellerId,
+            artworkid: Random_Id,
+            imageurl: imagePath,
+            product_tag,
             title,
             price,
-            image: imagePath,
-            description
+            bussiness_name: req.session.user.username
+            
         });
+        console.log(result)
 
         res.json({
             success: true,
-            artworkId: result[0].NewArtworkId,
+            artworkId: Random_Id,
             message: 'Artwork added successfully'
         });
+
     } catch (error) {
         console.error('Add artwork error:', error);
         res.status(500).json({
@@ -71,7 +139,27 @@ router.post('/artwork/add', upload.single('image'), async (req, res) => {
 // Update artwork
 router.put('/artwork/:id', async (req, res) => {
     try {
-        const sellerId = 1; // TODO: Replace with actual user authentication
+        if (!req.session || !req.session.email) {
+            return res.status(401).json({
+                success: false,
+                message: 'Please login to continue'
+            });
+        }
+
+        const getId = await executeStoredProcedure('GetIdandUsernameSp', {
+            email: req.session.email,
+            usertype: 'seller'
+        });
+
+        if (!getId || !getId[0]) {
+            return res.status(403).json({
+                success: false,
+                message: 'Seller account not found'
+            });
+        }
+
+        const sellerId = getId[0]['ID'];
+
         const artworkId = parseInt(req.params.id);
         const { title, price, description } = req.body;
 
@@ -99,7 +187,26 @@ router.put('/artwork/:id', async (req, res) => {
 // Delete artwork
 router.delete('/artwork/:id', async (req, res) => {
     try {
-        const sellerId = 1; // TODO: Replace with actual user authentication
+        if (!req.session || !req.session.email) {
+            return res.status(401).json({
+                success: false,
+                message: 'Please login to continue'
+            });
+        }
+
+        const getId = await executeStoredProcedure('GetIdandUsernameSp', {
+            email: req.session.email,
+            usertype: 'seller'
+        });
+
+        if (!getId || !getId[0]) {
+            return res.status(403).json({
+                success: false,
+                message: 'Seller account not found'
+            });
+        }
+
+        const sellerId = getId[0]['ID'];
         const artworkId = parseInt(req.params.id);
 
         await executeStoredProcedure('sp_DeleteArtwork', {
