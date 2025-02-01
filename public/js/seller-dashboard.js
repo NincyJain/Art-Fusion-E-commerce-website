@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const addArtworkBtn = document.querySelector('.add-artwork');
     const artworkGrid = document.querySelector('.artwork-grid');
     const editProfileBtn = document.querySelector('.edit-profile');
+  
     
     // Add New Artwork Modal
     const createArtworkModal = `
@@ -137,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Handle Edit Artwork
-    document.querySelectorAll('.artwork-actions .edit').forEach(button => {
+    document.querySelectorAll('.edit').forEach(button => {
         button.addEventListener('click', async (e) => {
             const artworkCard = e.target.closest('.artwork-card');
             const artworkId = artworkCard.dataset.id;
@@ -155,31 +156,62 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Handle Delete Artwork
-    document.querySelectorAll('.artwork-actions .delete').forEach(button => {
-        button.addEventListener('click', async (e) => {
-            if (confirm('Are you sure you want to delete this artwork?')) {
-                const artworkCard = e.target.closest('.artwork-card');
-                const artworkId = artworkCard.dataset.id;
+    // document.querySelectorAll('.delete').forEach(button => {
+    //     button.addEventListener('click', async (e) => {
+    //         let confirmation = confirm('Are you sure you want to delete this artwork?')
+    //         if (confirmation === true) {
+    //             const artworkCard = e.target.closest('.artwork-item');
+    //             const artworkId = artworkCard.dataset.artworkId;;
+    //             // const artworkId = artworkCard;
+    //             console.log(artworkId)
+    //             console.log('Deletion Started!')
+    //             try {
+    //                 const response = await fetch(`/seller/artwork/${artworkId}`, {
+    //                     method: 'DELETE'
+    //                 });
+                    
+    //                 const data = await response.json();
+                    
+    //                 if (data.success) {
+    //                     artworkCard.remove();
+    //                 } else {
+    //                     alert(data.message || 'Failed to delete artwork');
+    //                 }
+    //             } catch (error) {
+    //                 console.error('Error:', error);
+    //                 alert('Failed to delete artwork');
+    //             }
+    //         }
+    //     });
+    // });
+
+    async function deleteArtwork(artworkId) {
+        let confirmation = confirm('Are you sure you want to delete this artwork?');
+        if (confirmation) {
+            console.log('Deleting artwork with ID:', artworkId);
+            try {
+                const response = await fetch(`/seller/artwork/${artworkId}`, {
+                    method: 'DELETE'
+                });
                 
-                try {
-                    const response = await fetch(`/seller/artwork/${artworkId}`, {
-                        method: 'DELETE'
-                    });
-                    
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        artworkCard.remove();
-                    } else {
-                        alert(data.message || 'Failed to delete artwork');
+                const data = await response.json();
+                console.log(data)
+                
+                if (data.success) {
+                    // Find and remove the artwork item from DOM
+                    const artworkElement = document.querySelector(`.artwork-item:has(.artwork-id:contains('${artworkId}'))`);
+                    if (artworkElement) {
+                        artworkElement.remove();
                     }
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert('Failed to delete artwork');
+                } else {
+                    alert(data.message || 'Failed to delete artwork');
                 }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to delete artwork');
             }
-        });
-    });
+        }
+    }
     
     // Helper function to create edit form
     function createEditForm(id, title, price) {
@@ -244,4 +276,82 @@ function cancelEdit(button) {
     const artworkCard = button.closest('.artwork-card');
     artworkCard.querySelector('.edit-form').style.display = 'none';
     artworkCard.querySelector('.artwork-details').style.display = 'block';
+}
+
+// Modal handling
+const modal = document.getElementById('updateModal');
+
+function openUpdateModal(artworkId) {
+    const artwork = artworks.find(art => art.id === artworkId);
+    if (artwork) {
+        document.getElementById('artworkId').value = artwork.id;
+        document.getElementById('artworkName').value = artwork.name;
+        document.getElementById('artworkPrice').value = artwork.price;
+        document.getElementById('artworkTag').value = artwork.tag;
+        modal.style.display = 'block';
+    }
+}
+
+function closeModal() {
+    modal.style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    if (event.target === modal) {
+        closeModal();
+    }
+}
+
+// Handle artwork update
+async function handleUpdate(event) {
+    event.preventDefault();
+    
+    const artworkId = document.getElementById('artworkId').value;
+    const updateData = {
+        name: document.getElementById('artworkName').value,
+        price: document.getElementById('artworkPrice').value,
+        tag: document.getElementById('artworkTag').value
+    };
+
+    try {
+        const response = await fetch(`seller/artwork/${artworkId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updateData)
+        });
+
+        if (response.ok) {
+            // Refresh the page or update the UI
+            window.location.reload();
+        } else {
+            alert('Failed to update artwork');
+        }
+    } catch (error) {
+        console.error('Error updating artwork:', error);
+        alert('Error updating artwork');
+    }
+}
+
+// Handle artwork deletion
+async function deleteArtwork(artworkId) {
+    if (confirm('Are you sure you want to delete this artwork?')) {
+        try {
+            const response = await fetch(`/seller/artwork/${artworkId}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                // Refresh the page or update the UI
+                window.location.reload();
+            } else {
+                alert('Failed to delete artwork');
+            }
+        } catch (error) {
+            console.error('Error deleting artwork:', error);
+            alert('Error deleting artwork');
+        }
+    }
 }

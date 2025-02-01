@@ -60,13 +60,13 @@ block content
                             .artwork-item
                                 img.artwork-thumbnail(src=artwork.image_url alt=artwork.Title)
                                 .artwork-info
-                                    span.artwork-id Artwork ID: #{artwork.Artwork_id}
+                                    span.artwork-id #{artwork.Artwork_id}
                                     h3.artwork-name #{artwork.Title}
                                     span.artwork-tag #{artwork.Product_tag}
                                 .artwork-price ₹#{artwork.Price}
                                 .artwork-actions
                                     button.edit Edit
-                                    button.delete Delete
+                                    button.delete(onclick=`deleteArtwork('${artwork.Artwork_id}')`) Delete
                     else
                         .no-artworks
                             p No artworks listed yet

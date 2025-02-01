@@ -4,6 +4,7 @@ const router = express.Router();
 const { executeStoredProcedure } = require('../utils/dbhelpers');
 const upload = require('../config/multer');
 
+
 var Random_Id;
 
 function generateNumericId(length) {
@@ -139,15 +140,9 @@ router.post('/artwork/add', upload.single('image'), async (req, res) => {
 // Update artwork
 router.put('/artwork/:id', async (req, res) => {
     try {
-        if (!req.session || !req.session.email) {
-            return res.status(401).json({
-                success: false,
-                message: 'Please login to continue'
-            });
-        }
 
         const getId = await executeStoredProcedure('GetIdandUsernameSp', {
-            email: req.session.email,
+            email: req.session.user.email,
             usertype: 'seller'
         });
 
@@ -164,11 +159,14 @@ router.put('/artwork/:id', async (req, res) => {
         const { title, price, description } = req.body;
 
         const result = await executeStoredProcedure('sp_UpdateArtwork', {
-            artworkId,
+            
             sellerId,
+            artworkId,
+            imageurl,
+            Product_tag,
             title,
-            price,
-            description
+            price
+
         });
 
         res.json({
@@ -187,7 +185,7 @@ router.put('/artwork/:id', async (req, res) => {
 // Delete artwork
 router.delete('/artwork/:id', async (req, res) => {
     try {
-        if (!req.session || !req.session.email) {
+        if (!req.session || !req.session.user.email) {
             return res.status(401).json({
                 success: false,
                 message: 'Please login to continue'
@@ -195,7 +193,7 @@ router.delete('/artwork/:id', async (req, res) => {
         }
 
         const getId = await executeStoredProcedure('GetIdandUsernameSp', {
-            email: req.session.email,
+            email: req.session.user.email,
             usertype: 'seller'
         });
 
@@ -206,8 +204,13 @@ router.delete('/artwork/:id', async (req, res) => {
             });
         }
 
+        console.log('Successfully fetch the seller id')
+
         const sellerId = getId[0]['ID'];
+        console.log(req.params)
         const artworkId = parseInt(req.params.id);
+
+        console.log('>> Deletion Started!!')
 
         await executeStoredProcedure('sp_DeleteArtwork', {
             artworkId,
