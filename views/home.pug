@@ -57,6 +57,9 @@ block content
       div.featured_prod_card
         div
           img(src="../img/peacock.png" alt="peacock")
+          div(style = "display: flex; gap: 0.6rem; margin-left: 16px;") 
+            button.add-to-cart(data-id="51") Add to Cart
+            button.add-to-wishlist(data-id="51") Wishlist
         .texts 
           h4 Peacock Original 
           p ₹6,799
@@ -66,6 +69,9 @@ block content
       div.featured_prod_card
         div
           img(src="../img/resinnecklace.png" alt="resin necklace")
+          div(style = "display: flex; gap: 0.6rem; margin-left: 16px;") 
+            button.add-to-cart(data-id="52") Add to Cart
+            button.add-to-wishlist(data-id="52") Wishlist
         .texts 
           h4 Handmade Resin Necklace
           p ₹2,999
@@ -174,7 +180,7 @@ block content
 
 
 
-      
+
 
 block script
   <!-- jQuery -->
@@ -184,6 +190,6 @@ block script
   script 
     include ../public/js/home1.js
   script 
-        include ../public/js/base.js
+    include ../public/js/base.js
 
 

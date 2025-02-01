@@ -152,6 +152,7 @@ body {
     color: #777;
   }
   
+  
   /* Responsive Design */
   @media (max-width: 768px) {
     .hero-section {
@@ -279,3 +280,37 @@ body {
   transform: translateY(-2px);
 }
 
+.add-to-cart, .add-to-wishlist  {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  border: none; /* Remove border */
+  padding: 10px 20px; /* Add padding */
+  cursor: pointer; /* Pointer cursor on hover */
+  border-radius: 5px; /* Rounded corners */
+}
+
+
+button:hover {
+  opacity: 0.9; /* Slight transparency effect on hover */
+}
+
+
+/* .add-to-cart .add-to-wishlist {
+  background-color: #4CAF50;
+  color: white;
+}
+
+
+.add-to-cart, .add-to-wishlist {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+
+.add-to-cart:hover .add-to-wishlist:hover {
+  background-color: #45a049;
+} */

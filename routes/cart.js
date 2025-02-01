@@ -10,6 +10,8 @@ router.get('/', async (req, res) => {
         const results = await executeStoredProcedure('sp_GetCartItems', {
             userId: userId
         });
+
+        console.log(results)
         
         res.render('add_to_cart', { products: results });
     } catch (err) {
