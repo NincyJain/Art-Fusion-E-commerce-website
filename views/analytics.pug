@@ -1,0 +1,62 @@
+//- views/analytics.pug
+extends base.pug
+
+block style
+    style
+        include ../public/css/seller-dashboard.css
+        include ../public/css/analytics.css
+
+block content
+    .dashboard-container
+        .dashboard-sidebar
+            nav.dashboard-nav
+                a.nav-item(href="/seller") 
+                    i.fas.fa-palette
+                    | My Artworks
+                a.nav-item.active(href="/analytics") 
+                    i.fas.fa-chart-line
+                    | Analytics
+                a.nav-item(href="#") 
+                    i.fas.fa-comments
+                    | Messages
+                a.nav-item(href="#") 
+                    i.fas.fa-cog
+                    | Settings
+
+        .dashboard-main
+            .stats-header
+                .stat-card
+                    h3 Total Sales
+                    p.stat-value ₹#{totalSales || 0}
+                .stat-card
+                    h3 Artworks Listed
+                    p.stat-value= totalArtworks || 0
+                .stat-card
+                    h3 Views This Month
+                    p.stat-value #{Artist__views_this_month || 0}
+
+            .analytics-section
+                .chart-grid
+                    .chart-card
+                        h2 Monthly Views Trend
+                        .chart-container
+                            canvas#monthlyViewsChart
+                    
+                    .chart-card
+                        h2 Monthly Sales
+                        .chart-container
+                            canvas#monthlySalesChart
+                    
+                    .chart-card.full-width
+                        h2 Performance Overview
+                        .chart-container
+                            canvas#combinedChart
+
+block script
+    script(src="https://kit.fontawesome.com/your-kit-code.js")
+    script(src='https://code.jquery.com/jquery-3.7.1.min.js')
+    script(src="https://cdn.jsdelivr.net/npm/chart.js")
+    script.
+        const monthlyViews = !{JSON.stringify(monthlyViews)};
+        const monthlySales = !{JSON.stringify(monthlySales)};
+    script(src="/js/analytics.js")
