@@ -6,35 +6,22 @@ block style
 
 block content
     .dashboard-container
-        //- Sidebar
         .dashboard-sidebar
-            //- .profile-section
-            //-     //- .profile-image
-            //-     //-     img(src=artist.profileImage || "/images/default-profile.jpg" alt="Profile Image")
-            //-     h2.artist-name= username || "Artist Name"
-            //-     p.follower-count
-            //-         span.count= artist.followers || 0
-            //-         |  Followers
-            //-     button.edit-profile Edit Profile
-
-            //- Navigation
             nav.dashboard-nav
                 a.nav-item.active(href="#") 
                     i.fas.fa-palette
                     | My Artworks
-                a.nav-item(href="#") 
+                a.nav-item(href="/analytics") 
                     i.fas.fa-chart-line
                     | Analytics
-                a.nav-item(href="#") 
-                    i.fas.fa-comments
-                    | Messages
-                a.nav-item(href="#") 
-                    i.fas.fa-cog
-                    | Settings
+                //- a.nav-item(href="#") 
+                //-     i.fas.fa-comments
+                //-     | Messages
+                //- a.nav-item(href="#") 
+                //-     i.fas.fa-cog
+                //-     | Settings
 
-        //- Main Content
         .dashboard-main
-            //- Header with quick stats
             .stats-header
                 .stat-card
                     h3 Total Sales
@@ -46,7 +33,6 @@ block content
                     h3 Views This Month
                     p.stat-value #{Artist__views_this_month || 0}
 
-            //- Art Management Section
             .artwork-section
                 .section-header
                     h2 My Artworks
@@ -54,25 +40,30 @@ block content
                         i.fas.fa-plus
                         | Add New Artwork
                 .artwork-list
-                    //- Individual Artwork Item
                     if artworks && artworks.length > 0
                         each artwork in artworks
-                            .artwork-item
+                            .artwork-item(data-id=artwork.Artwork_id)
                                 img.artwork-thumbnail(src=artwork.image_url alt=artwork.Title)
                                 .artwork-info
                                     span.artwork-id #{artwork.Artwork_id}
                                     h3.artwork-name #{artwork.Title}
                                     span.artwork-tag #{artwork.Product_tag}
-                                .artwork-price ₹#{artwork.Price}
+                                    .artwork-price ₹#{artwork.Price}
                                 .artwork-actions
-                                    button.edit Edit
-                                    button.delete(onclick=`deleteArtwork('${artwork.Artwork_id}')`) Delete
+                                    button.edit
+                                        i.fas.fa-edit
+                                        | Edit
+                                    button.delete(onclick=`deleteArtwork('${artwork.Artwork_id}')`)
+                                        i.fas.fa-trash
+                                        | Delete
                     else
                         .no-artworks
                             p No artworks listed yet
-                
+                            
 block script
     script(src="https://kit.fontawesome.com/your-kit-code.js")
     script(src='https://code.jquery.com/jquery-3.7.1.min.js')
     script
         include ../public/js/seller-dashboard.js
+    script 
+        include ../public/js/base.js
