@@ -10,7 +10,7 @@ const stripe = require('./config/stripe');
 
 
 // Port configuration
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 8000;
 
 // Middleware setup
 app.use(bodyParser.json());
@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public'), {
     setHeaders: (res, path) => {
         if (path.endsWith('.js')) {
-            res.setHeader('Content-Type', 'application/javascript');
+            res.setHeader('Content-Type', 'application/javascript');//correct content type means 
         }
     }
 }));
@@ -31,6 +31,16 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
+
+// Make session available to templates
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    next();
+  });
+
+//   console.log("sessionssssss", req.session)
+
 
 // View engine setup
 app.set('view engine', 'pug');
@@ -43,6 +53,8 @@ const wishlistRoutes = require('./routes/wishlist');
 const sellerRoutes = require('./routes/seller');
 const paymentRoutes = require('./routes/payment');
 const ordersRoutes = require('./routes/order');
+const analyticsRoutes = require('./routes/analytics');
+const shopRoutes = require('./routes/shop');
 
 
 // const uploadRoutes = require('./routes/upload');
@@ -52,17 +64,10 @@ app.get('/dashboard', (req, res) => {
     res.render("home");
 });
 
-// app.get('/seller-dashboard', (req, res) => {
-//     res.render("seller-dashboard");
+// app.get('/shop', (req, res) => {
+    
+//     res.render("shop");
 // });
-
-// app.get('/login', (req, res) => {
-//     res.render("login");
-// });
-
-app.get('/shop', (req, res) => {
-    res.render("shop");
-});
 
 app.get('/blog', (req, res) => {
     res.render("blog");
@@ -76,44 +81,12 @@ app.get('/contactus', (req, res) => {
     res.render("contactus");
 });
 
-
-// app.post('/create-checkout-session', async(req, res)=>{
-//     try {
-//         console.log('Checkout session route hit');
-//         // Get cart items from session
-//         const cartItems = req.session.cart || [];
-        
-//         // Create line items for Stripe
-//         const lineItems = cartItems.map(item => ({
-//             price_data: {
-//                 currency: 'inr',
-//                 product_data: {
-//                     name: item.name,
-//                     images: [item.image],
-//                 },
-//                 unit_amount: item.price * 100, // Convert to smallest currency unit (paise)
-//             },
-//             quantity: item.quantity,
-//         }));
-
-//         // Create Stripe checkout session
-//         const session = await stripe.checkout.sessions.create({
-//             payment_method_types: ['card'],
-//             line_items: lineItems,
-//             mode: 'payment',
-//             success_url: `${process.env.DOMAIN}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
-//             cancel_url: `${process.env.DOMAIN}/cart`,
-//         });
-
-//         res.json({ url: session.url });
-//     } catch (error) {
-//         console.error('Payment Error:', error);
-//         res.status(500).json({ error: 'Payment session creation failed' });
-//     }
+// app.get('/analytics', (req, res)=>{
+//     res.render('analytics');
 // })
 
 // API Routes
-
+//Parent routes
 app.use('/', authRoutes.router);
 app.use('/cart', cartRoutes);
 app.use('/wishlist', wishlistRoutes);
@@ -121,10 +94,9 @@ app.use('/seller', sellerRoutes);
 app.use('/logout', authRoutes.router);
 app.use('/payment', paymentRoutes);
 app.use('/my-orders', ordersRoutes);
+app.use('/analytics', analyticsRoutes);
+app.use('/shop', shopRoutes);
 
-
-// app.use('/seller', sellerRoutes);
-// app.use('/upload', uploadRoutes);
 
 app.use((req, res, next) => {
     res.locals.user = req.session.user;
