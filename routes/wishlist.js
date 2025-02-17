@@ -6,7 +6,7 @@ const { executeStoredProcedure } = require('../utils/dbhelpers');
 // Get wishlist items
 router.get('/', async (req, res) => {
     try {
-        const userId = 1; // TODO: Replace with actual user authentication
+        const userId = req.session.user.id; // TODO: Replace with actual user authentication
         const results = await executeStoredProcedure('sp_GetWishlistItems', {
             userId: userId
         });
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 router.post('/add', async (req, res) => {
     try {
         const { productId } = req.body;
-        const userId = 1; // TODO: Replace with actual user authentication
+        const userId = req.session.user.id; // TODO: Replace with actual user authentication
 
         const result = await executeStoredProcedure('sp_AddToWishlist', {
             userId: userId,
@@ -55,7 +55,7 @@ router.post('/add', async (req, res) => {
 router.post('/remove', async (req, res) => {
     try {
         const { productId } = req.body;
-        const userId = 1; // TODO: Replace with actual user authentication
+        const userId = req.session.user.id; // TODO: Replace with actual user authentication
 
         await executeStoredProcedure('sp_RemoveFromWishlist', {
             userId: userId,
@@ -79,7 +79,7 @@ router.post('/remove', async (req, res) => {
 router.post('/toggle', async (req, res) => {
     try {
         const { productId } = req.body;
-        const userId = 1; // TODO: Replace with actual user authentication
+        const userId = req.session.user.id; // TODO: Replace with actual user authentication
 
         const result = await executeStoredProcedure('sp_ToggleWishlistItem', {
             userId: userId,

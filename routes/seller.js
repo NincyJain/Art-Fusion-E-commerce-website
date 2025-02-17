@@ -156,7 +156,8 @@ router.put('/artwork/:id', async (req, res) => {
         const sellerId = getId[0]['ID'];
 
         const artworkId = parseInt(req.params.id);
-        const { title, price, description } = req.body;
+        console.log(req.body);
+        const { title, price, imageurl, Product_tag } = req.body;
 
         const result = await executeStoredProcedure('sp_UpdateArtwork', {
             
