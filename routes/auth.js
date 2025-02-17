@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
     const { type, action, data } = req.body;
-    
+    console.log("Req Body: >>>>> ", req.body)
     try {
         if (action === 'login') {
             const result = await executeStoredProcedure('User_login_sp', {
@@ -41,12 +41,6 @@ router.post('/', async (req, res) => {
                     email: result[0].Email,
                     userType: result[0].UserType
                 })
-
-                console.log({ 
-                    success: true, 
-                    username: result[0].Username,
-                    redirectUrl: type === 'buyer' ? '/dashboard' : '/seller-dashboard' && '/seller'
-                });
                 
                 res.json({ 
                     success: true, 
@@ -70,7 +64,7 @@ router.post('/', async (req, res) => {
                 password: data.password,
                 userType: type
             });
-
+//sql k liye var kon se h aur iske liye kon se h
             if (result[0].Status === 'EXISTS') {
                 return res.status(400).json({
                     success: false,
@@ -95,7 +89,7 @@ router.post('/', async (req, res) => {
             res.json({ 
                 success: true,
                 username: data.username,
-                redirectUrl: type === 'buyer' ? '/' : '/'
+                redirectUrl: type === 'buyer' ? '/' : '/'//buyer aur seller ka same kyu?
             });
         }
     } catch (error) {

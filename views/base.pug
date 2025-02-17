@@ -27,7 +27,7 @@ html(lang="en")
           .dropdown-content
             .user-info
               img.profile-avatar(src="/img/profileimage.png" alt="Avatar")
-              span.username  #{user ? user.Username : 'Guest'}
+              span.username #{session && session.user ? session.user.username : 'Guest'}
             a(href="/profile")
               i.fas.fa-user
               | Profile
