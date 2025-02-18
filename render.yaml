@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: Art-fusion-E-Commerce-Website
+    env: node
+    buildCommand: apt-get update && apt-get install -y unixodbc unixodbc-dev && npm install
+    startCommand: node index.js
