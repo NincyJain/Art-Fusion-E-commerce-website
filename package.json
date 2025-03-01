@@ -10,5 +10,8 @@
     "pug": "^3.0.3",
     "requests": "^0.3.0",
     "stripe": "^17.5.0"
-  }
+  },
+  "scripts": {
+  "start": "node app.js"
+}
 }
